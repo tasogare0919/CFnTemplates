@@ -1,0 +1,54 @@
+AWSTemplateFormatVersion: 2010-09-09
+Description: Send Invitation to GuardDuty Member Account.
+
+Mappings:
+  GuardDutyMembers:
+    us-east-1: 
+      DetectorId: xxxx
+    us-east-2:
+      DetectorId: xxxx
+    us-west-1:
+      DetectorId: xxxx
+    us-west-2:
+      DetectorId: xxxx
+    ca-central-1:
+      DetectorId: xxxx
+    eu-central-1:
+      DetectorId: xxxx
+    eu-west-1:
+      DetectorId: xxxx
+    eu-west-2:
+      DetectorId: xxxx
+    eu-west-3:
+      DetectorId: xxxx
+    ap-northeast-1:
+      DetectorId: xxxx
+    ap-northeast-2:
+      DetectorId: xxxx
+    ap-southeast-1: 
+      DetectorId: xxxx
+    ap-southeast-2: 
+      DetectorId: xxxx
+    ap-south-1:
+      DetectorId: xxxx
+    sa-east-1:
+      DetectorId: xxxx
+
+Parameters:
+  MemberAccountId:
+    Description: Type Member Account Number.
+    Type: String
+  MemberAccountEmail:
+    Description: Type Member Account Email.
+    Type: String  
+
+
+Resources:
+  Member:
+    Type: AWS::GuardDuty::Member
+    Properties: 
+      Status: "Invited"    
+      MemberId: !Ref MemberAccountId
+      Email: !Ref MemberAccountEmail
+      DetectorId: !FindInMap [GuardDutyMembers,!Ref "AWS::Region", DetectorId]
+      DisableEmailNotification: True

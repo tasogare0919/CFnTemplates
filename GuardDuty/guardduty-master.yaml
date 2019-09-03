@@ -1,0 +1,47 @@
+AWSTemplateFormatVersion: 2010-09-09
+Description: Approve Invitation From GuardDuty Master Account.
+
+Mappings:
+  GuardDutyMasters:
+    us-east-1:
+      DetectorId: 
+    ap-northeast-1:
+      DetectorId: 
+    ap-northeast-2:
+      DetectorId: 
+    ap-south-1:
+      DetectorId: 
+    ap-southeast-1:
+      DetectorId: 
+    ap-southeast-2:
+      DetectorId: 
+    ca-central-1:
+      DetectorId: 
+    eu-central-1:
+      DetectorId: 
+    eu-west-1:
+      DetectorId: 
+    eu-west-2:
+      DetectorId: 
+    eu-west-3:
+      DetectorId: 
+    sa-east-1:
+      DetectorId: 
+    us-east-2:
+      DetectorId: 
+    us-west-1:
+      DetectorId: 
+    us-west-2:
+      DetectorId: 
+
+Parameters:
+  MasterAccountNumber:
+    Type: String
+
+
+Resources:
+  Master:
+    Type: AWS::GuardDuty::Master
+    Properties:
+      DetectorId: !FindInMap [GuardDutyMasters,!Ref "AWS::Region", DetectorId]
+      MasterId: !Ref MasterAccountNumber
